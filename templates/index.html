@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RH Inteligente</title>
+</head>
+<body>
+
+<h2>Envie seu currículo (PDF)</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="curriculo" required>
+    <button type="submit">Enviar</button>
+</form>
+
+{% if resultado %}
+    <h3>Resultado:</h3>
+    <p><b>Resumo:</b> {{ resultado.resumo }}</p>
+    <p><b>Nota:</b> {{ resultado.nota }}/10</p>
+    <p><b>Parecer:</b> {{ resultado.parecer }}</p>
+{% endif %}
+
+{% if ranking %}
+    <h3>Ranking de Candidatos</h3>
+    <table border="1">
+        <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Nota</th>
+            <th>Parecer</th>
+        </tr>
+        {% for candidato in ranking %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ candidato.nome }}</td>
+            <td>{{ candidato.nota }}</td>
+            <td>{{ candidato.parecer }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <!-- BOTÃO LIMPAR -->
+    <form method="POST" action="/limpar">
+        <button type="submit">Limpar candidatos</button>
+    </form>
+
+{% endif %}
+
+</body>
+</html>
