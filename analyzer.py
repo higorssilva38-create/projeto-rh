@@ -6,7 +6,7 @@ import os
 # 🔐 pega a API key da variável de ambiente
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def analisar_curriculo(caminho_pdf):
+def analisar_curriculo(caminho_pdf, parametros):
     texto = ""
 
     # 📄 leitura do PDF
@@ -18,11 +18,28 @@ def analisar_curriculo(caminho_pdf):
     # ⚠️ limitar tamanho (economiza uso da IA)
     texto = texto[:3000]
 
-    # 🤖 prompt para IA
-    prompt = f"""
-    Você é um especialista em recrutamento.
+    # 🔥 NOVO BLOCO: FORMATAÇÃO DOS PARÂMETROS
+    if parametros:
+        lista_parametros = [p.strip() for p in parametros.split(",")]
+        criterios_formatados = "\n".join([f"- {p}" for p in lista_parametros])
+    else:
+        criterios_formatados = "Nenhum critério específico fornecido."
 
-    Analise o currículo abaixo e responda EXATAMENTE nesse formato:
+    # 🤖 NOVO PROMPT (INTELIGENTE)
+    prompt = f"""
+    Você é um especialista em recrutamento e seleção.
+
+    Analise o currículo abaixo com base nos critérios da vaga.
+
+    CRITÉRIOS DA VAGA:
+    {criterios_formatados}
+
+    Regras:
+    - Avalie o candidato com base nos critérios acima
+    - A nota deve refletir o quanto o candidato atende aos critérios
+    - Seja objetivo e profissional
+
+    Responda EXATAMENTE nesse formato:
 
     Nome: ...
     Nota: (número de 0 a 10)

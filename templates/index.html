@@ -12,6 +12,24 @@
     <button type="submit">Enviar</button>
 </form>
 
+<hr>
+
+<!-- 🔥 NOVA SEÇÃO DE PARÂMETROS -->
+<h3>Parâmetros da vaga</h3>
+
+<form method="POST" action="/set_parametros">
+    <input type="text" name="parametros" placeholder="Ex: python, comunicação, liderança">
+    <button type="submit">Salvar parâmetros</button>
+</form>
+
+<form method="POST" action="/reset_parametros">
+    <button type="submit">Limpar parâmetros</button>
+</form>
+
+<p><strong>Parâmetros atuais:</strong> {{ parametros }}</p>
+
+<hr>
+
 {% if resultado %}
     <h3>Resultado:</h3>
     <p><b>Resumo:</b> {{ resultado.resumo }}</p>
@@ -40,7 +58,7 @@
 
     <br>
 
-    <!-- BOTÃO LIMPAR -->
+    <!-- BOTÃO LIMPAR CANDIDATOS -->
     <form method="POST" action="/limpar">
         <button type="submit">Limpar candidatos</button>
     </form>
